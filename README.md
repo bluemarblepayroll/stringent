@@ -20,7 +20,7 @@ npm install --save @bluemarblepayroll/stringent
 To install through Yarn:
 
 ````
-yarn add --save @bluemarblepayroll/stringent
+yarn add @bluemarblepayroll/stringent
 ````
 
 ## Examples
