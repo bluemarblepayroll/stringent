@@ -1,0 +1,45 @@
+{
+  "name": "@bluemarblepayroll/stringent",
+  "version": "1.0.0",
+  "description": "Simple string templating and formatting",
+  "main": "./dist/templater.js",
+  "typings": "./dist/templater.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "engines": {
+    "node": ">=8.11.3"
+  },
+  "contributors": [
+    "Matthew Ruggio <mruggio@bluemarblepayroll.com>"
+  ],
+  "keywords": [
+    "stringent",
+    "string formatting",
+    "formatting",
+    "string template",
+    "string templating",
+    "templating",
+    "template"
+  ],
+  "scripts": {
+    "test": "mocha --reporter spec",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bluemarblepayroll/stringent"
+  },
+  "bugs": {
+    "url": "https://github.com/bluemarblepayroll/stringent/issues"
+  },
+  "author": "Blue Marble Payroll, LLC",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/bluemarble-ondemand/stringent/src/master/",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "typescript": "^2.9.2"
+  }
+}
