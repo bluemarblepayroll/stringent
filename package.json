@@ -1,6 +1,6 @@
 {
   "name": "@bluemarblepayroll/stringent",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple string templating and formatting",
   "main": "./dist/processor.js",
   "typings": "./dist/processor.d.ts",

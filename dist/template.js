@@ -2,6 +2,7 @@
 exports.__esModule = true;
 var formatter_1 = require("./formatter");
 var placeholder_1 = require("./placeholder");
+var defaultResolver = function (value, input) { return input ? input[value] : null; };
 var Template = (function () {
     function Template(value) {
         this.value = value ? value.toString() : '';
@@ -16,13 +17,20 @@ var Template = (function () {
         return this._placeholders;
     };
     Template.prototype.evaluate = function (input, resolver, customFormatters) {
+        var _this = this;
         var resolved = this.value;
         this.placeholders().forEach(function (x) {
-            var resolvedValue = resolver(x.name, input);
+            var resolvedValue = _this.resolve(resolver, x.name, input);
             var formattedValue = formatter_1.Formatter.format(customFormatters, resolvedValue, x.formatter, x.arg);
             resolved = resolved.replace(new RegExp("{" + x.value + "}", 'g'), formattedValue);
         });
         return resolved;
+    };
+    Template.prototype.resolve = function (resolver, value, input) {
+        if (resolver) {
+            return resolver(value, input);
+        }
+        return defaultResolver(value, input);
     };
     Template.prototype.stripFirstAndLastChars = function (value) {
         if (value && value.length) {

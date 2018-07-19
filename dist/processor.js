@@ -3,16 +3,7 @@ exports.__esModule = true;
 var template_1 = require("./template");
 var Processor;
 (function (Processor) {
-    var defaultResolver = function (value, input) { return input ? input[value] : null; };
     var cache = {};
-    function resolverWrapper(input, resolver) {
-        if (resolver) {
-            return function (expr) { return resolver(expr, input); };
-        }
-        else {
-            return function (expr) { return defaultResolver(expr, input); };
-        }
-    }
     function isCached(expression) {
         return !!cache[expression];
     }
@@ -27,8 +18,7 @@ var Processor;
     }
     function evaluate(expression, input, resolver, customFormatters) {
         var template = get(expression);
-        var wrapper = resolverWrapper(input, resolver);
-        return template.evaluate(input, wrapper, customFormatters);
+        return template.evaluate(input, resolver, customFormatters);
     }
     Processor.evaluate = evaluate;
 })(Processor = exports.Processor || (exports.Processor = {}));
