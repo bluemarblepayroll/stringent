@@ -81,7 +81,7 @@ Now, we can pass this in and consume it as follows:
 
 ````
 let resolver = (value, input) => input && value && input.get(value.toString().split('.'));
-let example = 'The fox is quick: {fox.speed:yesNoUnknown}';
+let example = 'The fox is quick: {fox.speed::yesNoUnknown}';
 let input = Immutable.fromJS({ fox: { quick: true });
 let result = Processor.evaluate(example, input, resolver, customFormatter);
 ````
