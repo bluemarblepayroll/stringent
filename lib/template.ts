@@ -5,50 +5,48 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { CustomFormatter, Formatter } from "./formatter";
+import { format, ICustomFormatter } from "./formatter";
 import { Placeholder } from "./placeholder";
 
-const defaultResolver:Resolver = (value:string, input:any):any => input ? input[value] : null;
+export type IResolver = (value: string, input: any) => any;
 
-export interface Resolver {
-  (value:string, input:any):any;
-}
+const defaultResolver: IResolver = (value: string, input: any): any => input ? input[value] : null;
 
 export class Template {
-  readonly value:string;
+  public readonly value: string;
+  private parsedPlaceholders: Placeholder[];
 
-  private _placeholders:Array<Placeholder>;
-
-  constructor(value:string) {
-    this.value = value ? value.toString() : '';
+  constructor(value: string) {
+    this.value = value ? value.toString() : "";
   }
 
-  placeholders():Array<Placeholder> {
-    if (!this._placeholders) {
-      let matches = (this.value.match(/{(.*?)}/g) || []);
+  public placeholders(): Placeholder[] {
+    if (!this.parsedPlaceholders) {
+      const matches: string[] = (this.value.match(/{(.*?)}/g) || []);
 
-      this._placeholders = matches.map(x => this.stripFirstAndLastChars(x))
-                                  .map(x => new Placeholder(x));
+      this.parsedPlaceholders = matches.map((x) => this.stripFirstAndLastChars(x))
+                                       .map((x) => new Placeholder(x));
     }
 
-    return this._placeholders;
+    return this.parsedPlaceholders;
   }
 
-  evaluate(input:any, resolver:Resolver, customFormatters:Record<string, CustomFormatter>):string {
-    let resolved:string = this.value;
+  public evaluate(input: any,
+                  resolver: IResolver,
+                  customFormatters: Record<string, ICustomFormatter>): string {
+    let resolved: string = this.value;
 
-    this.placeholders().forEach(x => {
-      let resolvedValue:any = this.resolve(resolver, x.name, input);
+    this.placeholders().forEach((x) => {
+      const resolvedValue: any = this.resolve(resolver, x.name, input);
+      const formattedValue: string = format(customFormatters, resolvedValue, x.formatter, x.arg);
 
-      let formattedValue:string = Formatter.format(customFormatters, resolvedValue, x.formatter, x.arg);
-
-      resolved = resolved.replace(new RegExp(`{${x.value}}`, 'g'), formattedValue);
+      resolved = resolved.replace(new RegExp(`{${x.value}}`, "g"), formattedValue);
     });
 
     return resolved;
   }
 
-  private resolve(resolver:Resolver, value:string, input:any):any {
+  private resolve(resolver: IResolver, value: string, input: any): any {
     if (resolver) {
       return resolver(value, input);
     }
@@ -56,12 +54,11 @@ export class Template {
     return defaultResolver(value, input);
   }
 
-  private stripFirstAndLastChars(value:string):string {
+  private stripFirstAndLastChars(value: string): string {
     if (value && value.length) {
       return value.substring(1, value.length - 1);
     } else {
-      return '';
+      return "";
     }
   }
-
 }

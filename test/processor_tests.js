@@ -4,11 +4,11 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
- 
+
 'use strict';
 
 var expect = require('chai').expect;
-var Processor = require('../dist/processor.js').Processor;
+var evaluate = require('../dist/processor.js').evaluate;
 
 const customFormatter = {
   yesNo: (value, arg) => {
@@ -57,10 +57,9 @@ describe('Processor#evaluate ', () => {
     ];
 
     tests.forEach(x => {
-      let result = Processor.evaluate(x[0], x[1], null, customFormatter);
+      let result = evaluate(x[0], x[1], null, customFormatter);
 
       expect(result).to.equal(x[2]);
     });
   });
-
 });

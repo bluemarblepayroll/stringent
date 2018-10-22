@@ -5,35 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Resolver, Template } from "./template";
-import { CustomFormatter } from "./formatter";
+import { ICustomFormatter } from "./formatter";
+import { IResolver, Template } from "./template";
 
-export namespace Processor {
+const cache: Record<string, Template> = {};
 
-  const cache:Record<string, Template> = {};
+function get(expression: string): Template {
+  if (cache[expression]) {
+    return cache[expression];
+  } else {
+    const template: Template = new Template(expression);
 
-  function isCached(expression:string):boolean {
-    return !!cache[expression];
+    return cache[expression] = template;
   }
+}
 
-  function get(expression:string):Template {
-    if (cache[expression]) {
-      return cache[expression];
-    } else {
-      let template:Template = new Template(expression);
+export function evaluate(expression: string,
+                         input: any,
+                         resolver?: IResolver,
+                         customFormatters?: Record<string, ICustomFormatter>): string {
 
-      return cache[expression] = template;
-    }
-  }
+  const template: Template = get(expression);
 
-  export function evaluate(
-    expression:string,
-    input:any,
-    resolver?:Resolver,
-    customFormatters?:Record<string, CustomFormatter>):string {
-
-    let template:Template = get(expression);
-
-    return template.evaluate(input, resolver, customFormatters);
-  }
+  return template.evaluate(input, resolver, customFormatters);
 }
