@@ -34,8 +34,11 @@ Consider the following example:
 We can evaluate this by executing:
 
 ````
+import { evaluate } from '@bluemarblepayroll/stringent';
+
 let example = 'The {foxSpeed} brown fox jumps over the {dogSpeed} dog';
 let input = { foxSpeed: 'quick', dogSpeed: 'lazy' }';
+
 let result = evaluate(example, input);
 ````
 
@@ -47,8 +50,10 @@ The above example works just fine using the default object value resolver, but y
 
 ````
 let resolver = (value, input) => input && value && input.get(value.toString().split('.'));
+
 let example = 'The {fox.speed} brown fox jumps over the {dog.speed} dog';
 let input = Immutable.fromJS({ fox: { speed: 'quick' }, dog: { speed: 'lazy' } });
+
 let result = evaluate(example, input, resolver);
 ````
 
@@ -81,8 +86,10 @@ Now, we can pass this in and consume it as follows:
 
 ````
 let resolver = (value, input) => input && value && input.get(value.toString().split('.'));
+
 let example = 'The fox is quick: {fox.speed::yesNoUnknown}';
 let input = Immutable.fromJS({ fox: { quick: true });
+
 let result = evaluate(example, input, resolver, customFormatter);
 ````
 
@@ -107,15 +114,27 @@ Basic steps to take to get this repository compiling:
 To compile the TypeScript source down to native JavaScript, run:
 
 ````
-npm run build
+yarn run build
 ````
+
+You can also run the TypeScript compiler in watch mode with (start developing):
+
+```
+yarn run start
+```
 
 ### Running Tests
 
 To execute the test suite first compile the solution then run:
 
 ````
-npm run test
+yarn run test
+````
+
+### Linting
+
+````
+yarn run lint
 ````
 
 ## License
