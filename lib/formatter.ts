@@ -7,7 +7,7 @@
 
 export type ICustomFormatter = (value: any, arg: string) => string;
 
-function genericFormat(value: string, arg: string): string {
+function genericFormat(value: string): string {
   if (value === null || typeof value === "undefined") {
     return "";
   } else {
@@ -24,6 +24,6 @@ export function format(
   if (customFormatters && customFormatters[formatter]) {
     return customFormatters[formatter](value, arg);
   } else {
-    return genericFormat(value, arg);
+    return genericFormat(value);
   }
 }
