@@ -1,6 +1,6 @@
 # Stringent
 
-[![Build Status](https://travis-ci.org/bluemarblepayroll/stringent.svg?branch=master)](https://travis-ci.org/bluemarblepayroll/stringent)
+[![npm version](https://badge.fury.io/js/%40bluemarblepayroll%2Fstringent.svg)](https://badge.fury.io/js/%40bluemarblepayroll%2Fstringent) [![Build Status](https://travis-ci.org/bluemarblepayroll/stringent.svg?branch=master)](https://travis-ci.org/bluemarblepayroll/stringent) [![Maintainability](https://api.codeclimate.com/v1/badges/4864e6bc533e1e2fa62b/maintainability)](https://codeclimate.com/github/bluemarblepayroll/stringent/maintainability) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This library provides a pluggable string templating system.  At its core, it can take a templated string (such as: '{lastName}, {firstName} {middleName}') and a input object (default is a plain old JavaScript object) and it will dynamically resolve the string based on the input.  It also provides two optional arguments which help make this library 'pluggable':
 
