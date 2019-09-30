@@ -49,7 +49,7 @@ Result should now be: 'The quick brown fox jumps over the lazy dog'
 The above example works just fine using the default object value resolver, but you can also pass in a custom function that will serve as resolver.  That way you could use dot notation for value resolution.  For example:
 
 ````
-let resolver = (value, input) => input && value && input.get(...value.toString().split('.'));
+let resolver = (value, input) => input && value && input.getIn(value.toString().split('.'));
 
 let example = 'The {fox.speed} brown fox jumps over the {dog.speed} dog';
 let input = Immutable.fromJS({ fox: { speed: 'quick' }, dog: { speed: 'lazy' } });
@@ -85,7 +85,7 @@ let customFormatter = {
 Now, we can pass this in and consume it as follows:
 
 ````
-let resolver = (value, input) => input && value && input.get(value.toString().split('.'));
+let resolver = (value, input) => input && value && input.getIn(value.toString().split('.'));
 
 let example = 'The fox is quick: {fox.speed::yesNoUnknown}';
 let input = Immutable.fromJS({ fox: { quick: true });
